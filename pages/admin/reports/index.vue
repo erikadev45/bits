@@ -7,7 +7,7 @@
                         <v-card-text>
                             <v-form ref="form">
                                 <v-row>
-                                    <v-col cols="12" md="3">
+                                    <v-col cols="12" md="4">
                                         <v-select
                                             v-model="status"
                                             :items="statusItems"
@@ -18,31 +18,31 @@
                                             :rules="[rules.required]"
                                         ></v-select>
                                     </v-col>
-                                    <v-col cols="12" md="3">
+                                    <!-- <v-col cols="12" md="3">
                                         <v-text-field
                                             v-model="dateFrom"
                                             type="date"
                                             outlined
                                             dense
                                             hide-details
-                                            label="From"
+                                            label="Date From"
                                             :rules="[rules.required]"
                                         ></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" md="3">
+                                    </v-col> -->
+                                    <v-col cols="12" md="4">
                                         <v-text-field
                                             v-model="dateTo"
                                             type="date"
                                             outlined
                                             dense
                                             hide-details
-                                            label="To"
+                                            label="Date Modify"
                                             :rules="[rules.required]"
                                         ></v-text-field>
                                     </v-col>
                                     <v-col
                                         cols="12"
-                                        md="3"
+                                        md="4"
                                         class="d-flex justify-space-between"
                                     >
                                         <v-btn
@@ -65,6 +65,11 @@
                                         >
                                             Reset
                                         </v-btn>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <div>
+                                            <span class="font-weight-bold">Note: </span> Click reset button every after date filter.
+                                        </div>
                                     </v-col>
                                 </v-row>
                             </v-form>
@@ -177,7 +182,9 @@ export default {
         viewReport(){
             if (!this.$refs.form.validate()) return;
 
-            this.finalArr = this.finalArr.filter(val => this.$dayjs(val.created_on).isBetween(this.dateFrom, this.dateTo, null, '[]') && val.status === this.status)
+            this.finalArr = this.finalArr.filter(val => this.$dayjs(val.created_on).format('MM/DD/YYYY') === this.$dayjs(this.dateTo).format('MM/DD/YYYY') && val.status === this.status)
+
+            // this.finalArr = this.finalArr.filter(val => this.$dayjs(val.created_on).isBetween(this.dateFrom, this.dateTo, null, '[]') && val.status === this.status)
         },
 
         total(arr){

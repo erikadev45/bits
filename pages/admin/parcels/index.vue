@@ -119,13 +119,6 @@ export default {
             { text: "Status", value: "status" },
             { text: "Actions", value: "actions", sortable: false },
         ],
-
-            //  'Order Created',
-            //         'In Transit',
-            //         'Successfully PICKED UP',
-            //         'Successfully DROPPED OFF',
-            //         'Successfully DELIVERED',
-            //         'Unsuccessful DELIVERY'
         statusColors: [
             {
                 title: "Order Created",
