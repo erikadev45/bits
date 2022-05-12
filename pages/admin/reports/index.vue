@@ -50,7 +50,7 @@
                                             depressed
                                             color="primary"
                                             class="text-capitalize mr-1"
-                                            width="50%"
+                                            width="33%"
                                             height="40"
                                         >
                                             View Report
@@ -60,11 +60,54 @@
                                             depressed
                                             color="secondary"
                                             class="text-capitalize ml-1"
-                                            width="50%"
+                                            width="33%"
                                             height="40"
                                         >
                                             Reset
                                         </v-btn>
+                                        <bt-m-pdf-parcel-details :parcelStatus="'Order Created'" :isSmall="false" btnWidth="100%" btnHeight="40">
+                                            <section>
+                                                <v-simple-table>
+                                                    <template v-slot:default>
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-weight: bold" class="tbl-head">
+                                                                    Reference Number
+                                                                </th>
+                                                                <th style="font-weight: bold" class="tbl-head">
+                                                                    Sender
+                                                                </th>
+                                                                <th style="font-weight: bold" class="tbl-head">
+                                                                    Receiver
+                                                                </th>
+                                                                <th style="font-weight: bold" class="tbl-head">
+                                                                    {{ 'Amount (₱)' }}
+                                                                </th>
+                                                                <th style="font-weight: bold" class="tbl-head">
+                                                                    Date Created
+                                                                </th>
+                                                                <th style="font-weight: bold" class="tbl-head">
+                                                                    Status
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody v-if="finalArr.length > 0">
+                                                            <tr
+                                                                v-for="(parcel, i) in finalArr"
+                                                                :key="i"
+                                                            >
+                                                                <td>{{ parcel.reference_number }}</td>
+                                                                <td>{{ parcel.sender_name }}</td>
+                                                                <td>{{ parcel.receiver_name }}</td>
+                                                                <td>{{ numberWithCommas(parseFloat(total(parcel.products.map(product => +product.total)))) }}</td>
+                                                                <td> {{ $dayjs(parcel.created_on).format('MM/DD/YYYY')}}</td>
+                                                                <td>{{ parcel.status }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </template>
+                                                </v-simple-table>
+                                            </section>
+                                        </bt-m-pdf-parcel-details>
                                     </v-col>
                                     <v-col cols="12">
                                         <div>
@@ -170,6 +213,10 @@ export default {
     },
 
     methods: {
+
+        numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
 
         reset(){
             this.$refs.form.resetValidation()

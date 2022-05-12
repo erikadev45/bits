@@ -27,13 +27,15 @@
         </client-only>
         <div>
             <v-btn
-                class="text-capitalize mx-2"
+                :class="btnClass"
                 color="primary"
                 depressed
                 outlined
-                small
+                :small="isSmall"
                 :disabled="parcelStatus !== 'Order Created'"
                 @click="generateReport"
+                :width="btnWidth"
+                :height="btnHeight"
             >
                 <v-icon left> mdi-file-document </v-icon>
                 Print
@@ -47,7 +49,23 @@ export default {
     name: "pdf",
 
     props: {
-        parcelStatus: String
+        parcelStatus: String,
+        btnWidth: {
+            default: '',
+            type: String
+        },
+        btnHeight: {
+            default: '',
+            type: String
+        },
+        isSmall: {
+            default: true,
+            type: Boolean
+        },
+        btnClass: {
+            default: 'text-capitalize mx-2',
+            type: String
+        }
     },
 
     data() {
